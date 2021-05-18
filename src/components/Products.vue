@@ -18,13 +18,11 @@
           >
           <div v-if="product.products_i18_n">
             {{ product.products_i18_n.name }}
-            {{ product.characteristics_values_for_product[0].id }}
           </div>
           <div v-if="!product.products_i18_n">
             Подушка {{ product.nameVyrobnyk }}
             {{ product.nameNapovnyuvach }}
             {{ product.nameRozmir }}
-            {{ product.id }}
           </div>
           <div class="price">
             {{
