@@ -71,12 +71,12 @@
           </td>
           <td :key="i" v-if="!shyr.shyryna && char.id===11">-</td>
         </template>
-        <template v-for="(zastibkaElement, i) in getPropertys">
+        <template v-for="(zast, i) in getPropertys">
           <td :key="i"
-              v-if="zastibkaElement.zastibka && char.id===zastibkaElement.zastibka.characteristics_property_id">
-            {{ zastibkaElement.zastibka.characteristics_default_values_i18_n.name | toUppercase }}
+              v-if="zast.zastibka && char.id===zast.zastibka.characteristics_property_id">
+            {{ zast.zastibka.characteristics_default_values_i18_n.name | toUppercase }}
           </td>
-          <td :key="i" v-if="!zastibkaElement.zastibka && char.id===9">-</td>
+          <td :key="i" v-if="!zast.zastibka && char.id===9">-</td>
         </template>
         <template v-for="(gabaryt, i) in getPropertys">
           <td :key="i"
@@ -126,13 +126,13 @@
     <!--    Product show only difference characteristics (start) -->
     <template v-if="showDiff">
       <tr v-for="(char, i) in getOnlyDiff" :key="i">
-        <td>{{ char.name }}</td>
+        <td>{{ char.name | toUppercase }}</td>
         <template v-for="(item, index) in char.value">
           <td :key="index" v-if="!item.characteristics_default_values_i18_n">
             {{ item.value }}
           </td>
           <td :key="index" v-else-if="!item.value">
-            {{ item.characteristics_default_values_i18_n.name  | toUppercase}}
+            {{ item.characteristics_default_values_i18_n.name  | toUppercase }}
           </td>
           <td :key="index" v-if="!item">-</td>
         </template>
@@ -140,7 +140,6 @@
     </template>
     <!--    Product show only difference characteristics (end) -->
     </tbody>
-
   </table>
 </template>
 
@@ -315,7 +314,7 @@ tbody td {
 
 tr :first-child {
   font-weight: bold;
-  max-width: 100px;
+  width: 120px;
 }
 
 .price {
