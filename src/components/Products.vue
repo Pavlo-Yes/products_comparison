@@ -41,80 +41,85 @@
       <!--      Default product characteristics (start) -->
       <tr v-for="char in characteristics" :key="char.id">
         <td>
-          {{ char.characteristics_property_i18_n.name }}
+          {{ char.characteristics_property_i18_n.name | toUppercase }}
         </td>
-        <template v-for="(forma, i) in getForma">
-          <td :key="i" v-if="char.id===forma.characteristics_property_id">
-            {{ forma.characteristics_default_values_i18_n.name | toUppercase }}
-          </td>
-        </template>
-        <template v-for="(napovnyuvach, i) in getNapovnyuvach">
-          <td :key="i" v-if="char.id===napovnyuvach.characteristics_property_id">
-            {{ napovnyuvach.characteristics_default_values_i18_n.name | toUppercase }}
-          </td>
-        </template>
-        <template v-for="(rozmir, i) in getRozmir">
-          <td :key="i" v-if="char.id===rozmir.characteristics_property_id">
-            {{ rozmir.value }}
-          </td>
-        </template>
-        <template v-for="(shyrynaElement, i) in getShyryna">
+        <template v-for="(form, i) in getPropertys">
           <td :key="i"
-              v-if="shyrynaElement.shyryna && char.id===shyrynaElement.shyryna.characteristics_property_id">
-            {{ shyrynaElement.shyryna.value }}
+              v-if="form.forma && char.id===form.forma.characteristics_property_id">
+            {{ form.forma.characteristics_default_values_i18_n.name | toUppercase }}
           </td>
-          <td :key="i" v-if="!shyrynaElement.shyryna && char.id===11">-</td>
+          <td :key="i" v-if="!form.forma && char.id===7">-</td>
         </template>
-        <template v-for="(zastibkaElement, i) in getZastibka">
+        <template v-for="(napov, i) in getPropertys">
+          <td :key="i"
+              v-if="napov.napovnyuvach && char.id===napov.napovnyuvach.characteristics_property_id">
+            {{ napov.napovnyuvach.characteristics_default_values_i18_n.name | toUppercase }}
+          </td>
+          <td :key="i" v-if="!napov.napovnyuvach && char.id===8">-</td>
+        </template>
+        <template v-for="(rozm, i) in getPropertys">
+          <td :key="i"
+              v-if="rozm.rozmir && char.id===rozm.rozmir.characteristics_property_id">
+            {{ rozm.rozmir.value }}
+          </td>
+          <td :key="i" v-if="!rozm.rozmir && char.id===3">-</td>
+        </template>
+        <template v-for="(shyr, i) in getPropertys">
+          <td :key="i"
+              v-if="shyr.shyryna && char.id===shyr.shyryna.characteristics_property_id">
+            {{ shyr.shyryna.value }}
+          </td>
+          <td :key="i" v-if="!shyr.shyryna && char.id===11">-</td>
+        </template>
+        <template v-for="(zastibkaElement, i) in getPropertys">
           <td :key="i"
               v-if="zastibkaElement.zastibka && char.id===zastibkaElement.zastibka.characteristics_property_id">
             {{ zastibkaElement.zastibka.characteristics_default_values_i18_n.name | toUppercase }}
           </td>
           <td :key="i" v-if="!zastibkaElement.zastibka && char.id===9">-</td>
         </template>
-        <template v-for="(gabaryt, i) in getGabaryty">
+        <template v-for="(gabaryt, i) in getPropertys">
           <td :key="i"
               v-if="gabaryt.gabaryty && char.id===gabaryt.gabaryty.characteristics_property_id">
             {{ gabaryt.gabaryty.characteristics_default_values_i18_n.name | toUppercase }}
           </td>
           <td :key="i" v-if="!gabaryt.gabaryty && char.id===4">-</td>
         </template>
-        <template v-for="(typ, i) in getTypPodushky">
+        <template v-for="(typ, i) in getPropertys">
           <td :key="i"
               v-if="typ.typ && char.id===typ.typ.characteristics_property_id">
             {{ typ.typ.characteristics_default_values_i18_n.name | toUppercase }}
           </td>
           <td :key="i" v-if="!typ.typ && char.id===5">-</td>
         </template>
-        <template v-for="(dovzhyna, i) in getDovzhyna">
+        <template v-for="(dovzhyna, i) in getPropertys">
           <td :key="i"
               v-if="dovzhyna.dovzhyna && char.id===dovzhyna.dovzhyna.characteristics_property_id">
             {{ dovzhyna.dovzhyna.value | toUppercase }}
           </td>
           <td :key="i" v-if="!dovzhyna.dovzhyna && char.id===6">-</td>
         </template>
-        <template v-for="(kol, i) in getKolir">
+        <template v-for="(kol, i) in getPropertys">
           <td :key="i"
               v-if="kol.kolir && char.id===kol.kolir.characteristics_property_id">
             {{ kol.kolir.characteristics_default_values_i18_n.name | toUppercase }}
           </td>
           <td :key="i" v-if="!kol.kolir && char.id===14">-</td>
         </template>
-        <template v-for="(vyrobnyk, i) in getKrainaVyrobnyk">
+        <template v-for="(vyrobnyk, i) in getPropertys">
           <td :key="i"
               v-if="vyrobnyk.kraina && char.id===vyrobnyk.kraina.characteristics_property_id">
             {{ vyrobnyk.kraina.characteristics_default_values_i18_n.name | toUppercase }}
           </td>
           <td :key="i" v-if="!vyrobnyk.kraina && char.id===10">-</td>
         </template>
-        <template v-for="(vyrob, i) in getVyrobnyk">
+        <template v-for="(vyrob, i) in getPropertys">
           <td :key="i"
               v-if="vyrob.vyrobnyk && char.id===vyrob.vyrobnyk.characteristics_property_id">
             {{ vyrob.vyrobnyk.characteristics_default_values_i18_n.name | toUppercase }}
           </td>
           <td :key="i" v-if="!vyrob.vyrobnyk && char.id===13">-</td>
         </template>
-
       </tr>
       <!--      Default product characteristics (end) -->
     </template>
@@ -199,123 +204,8 @@ export default {
       }
       return notEqualCharObj
     },
-    getNapovnyuvach: function () {
-      const napovnyuvach = [];
-      this.products.map(product => {
-        product.characteristics_values_for_product.map(charValForProduct => {
-          charValForProduct.characteristics_default_values.map(charDefVal => {
-            if (charDefVal.characteristics_default_values_i18_n !== null &&
-                charDefVal.characteristics_property_id === 8) {
-              napovnyuvach.push(charDefVal)
-            }
-          })
-        })
-      })
-      return napovnyuvach
-    },
-    getForma: function () {
-      const forma = [];
-      this.products.map(product => {
-        product.characteristics_values_for_product.map(charValForProduct => {
-          charValForProduct.characteristics_default_values.map(charDefVal => {
-            if (charDefVal.characteristics_default_values_i18_n !== null &&
-                charDefVal.characteristics_property_id === 7) {
-              forma.push(charDefVal)
-            }
-          })
-        })
-      })
-      return forma
-    },
-    getRozmir: function () {
-      const rozmir = [];
-      this.products.map(product => {
-        product.characteristics_values_for_product.map(charValForProduct => {
-          charValForProduct.characteristics_default_values.map(charDefVal => {
-            if (charDefVal.characteristics_property_id === 3) {
-              rozmir.push(charDefVal)
-            }
-          })
-        })
-      })
-      return rozmir
-    },
-    getShyryna: function () {
-      const shyryna = [];
-      this.products.map(product => {
-        product.characteristics_values_for_product.map(charValForProduct => {
-          charValForProduct.characteristics_default_values.map(charDefVal => {
-            if (charDefVal.characteristics_property_id === 11) {
-              charValForProduct["shyryna"] = charDefVal
-            }
-          })
-          shyryna.push(charValForProduct)
-        })
-      })
-      return shyryna
-    },
-    getZastibka: function () {
-      const zastibka = [];
-      this.products.map(product => {
-        product.characteristics_values_for_product.map(charValForProduct => {
-          charValForProduct.characteristics_default_values.map(charDefVal => {
-            if (charDefVal.characteristics_default_values_i18_n !== null &&
-                charDefVal.characteristics_property_id === 9) {
-              charValForProduct["zastibka"] = charDefVal
-            }
-          })
-          zastibka.push(charValForProduct)
-        })
-      })
-      return zastibka
-    },
-    getGabaryty: function () {
-      const gabaryty = [];
-      this.products.map(product => {
-        product.characteristics_values_for_product.map(charValForProduct => {
-          charValForProduct.characteristics_default_values.map(charDefVal => {
-            if (charDefVal.characteristics_default_values_i18_n !== null &&
-                charDefVal.characteristics_property_id === 4) {
-              charValForProduct["gabaryty"] = charDefVal
-            }
-          })
-          gabaryty.push(charValForProduct)
-        })
-      })
-      return gabaryty
-    },
-    getTypPodushky: function () {
-      const typ = [];
-      this.products.map(product => {
-        product.characteristics_values_for_product.map(charValForProduct => {
-          charValForProduct.characteristics_default_values.map(charDefVal => {
-            if (charDefVal.characteristics_default_values_i18_n !== null &&
-                charDefVal.characteristics_property_id === 5) {
-              charValForProduct["typ"] = charDefVal
-            }
-          })
-          typ.push(charValForProduct)
-        })
-      })
-      return typ
-    },
-    getDovzhyna: function () {
-      const dovzhyna = [];
-      this.products.map(product => {
-        product.characteristics_values_for_product.map(charValForProduct => {
-          charValForProduct.characteristics_default_values.map(charDefVal => {
-            if (charDefVal.characteristics_default_values_i18_n !== null &&
-                charDefVal.characteristics_property_id === 6) {
-              charValForProduct["dovzhyna"] = charDefVal
-            }
-          })
-          dovzhyna.push(charValForProduct)
-        })
-      })
-      return dovzhyna
-    },
-    getKolir: function () {
-      const kolir = [];
+    getPropertys: function () {
+      const result = [];
       this.products.map(product => {
         product.characteristics_values_for_product.map(charValForProduct => {
           charValForProduct.characteristics_default_values.map(charDefVal => {
@@ -323,41 +213,52 @@ export default {
                 charDefVal.characteristics_property_id === 14) {
               charValForProduct["kolir"] = charDefVal
             }
-          })
-          kolir.push(charValForProduct)
-        })
-      })
-      return kolir
-    },
-    getKrainaVyrobnyk: function () {
-      const kraina = [];
-      this.products.map(product => {
-        product.characteristics_values_for_product.map(charValForProduct => {
-          charValForProduct.characteristics_default_values.map(charDefVal => {
-            if (charDefVal.characteristics_default_values_i18_n !== null &&
-                charDefVal.characteristics_property_id === 10) {
-              charValForProduct["kraina"] = charDefVal
-            }
-          })
-          kraina.push(charValForProduct)
-        })
-      })
-      return kraina
-    },
-    getVyrobnyk: function () {
-      const vyrobnyk = [];
-      this.products.map(product => {
-        product.characteristics_values_for_product.map(charValForProduct => {
-          charValForProduct.characteristics_default_values.map(charDefVal => {
             if (charDefVal.characteristics_default_values_i18_n !== null &&
                 charDefVal.characteristics_property_id === 13) {
               charValForProduct["vyrobnyk"] = charDefVal
             }
+            if (charDefVal.value !== null &&
+                charDefVal.characteristics_property_id === 11) {
+              charValForProduct["shyryna"] = charDefVal
+            }
+            if (charDefVal.characteristics_default_values_i18_n !== null &&
+                charDefVal.characteristics_property_id === 10) {
+              charValForProduct["kraina"] = charDefVal
+            }
+            if (charDefVal.characteristics_default_values_i18_n !== null &&
+                charDefVal.characteristics_property_id === 9) {
+              charValForProduct["zastibka"] = charDefVal
+            }
+            if (charDefVal.characteristics_default_values_i18_n !== null &&
+                charDefVal.characteristics_property_id === 8) {
+              charValForProduct["napovnyuvach"] = charDefVal
+            }
+            if (charDefVal.characteristics_default_values_i18_n !== null &&
+                charDefVal.characteristics_property_id === 7) {
+              charValForProduct["forma"] = charDefVal
+            }
+            if (charDefVal.characteristics_default_values_i18_n !== null &&
+                charDefVal.characteristics_property_id === 6) {
+              charValForProduct["dovzhyna"] = charDefVal
+            }
+            if (charDefVal.characteristics_default_values_i18_n !== null &&
+                charDefVal.characteristics_property_id === 5) {
+              charValForProduct["typ"] = charDefVal
+            }
+            if (charDefVal.characteristics_default_values_i18_n !== null &&
+                charDefVal.characteristics_property_id === 4) {
+              charValForProduct["gabaryty"] = charDefVal
+            }
+            if (charDefVal.value !== null &&
+                charDefVal.characteristics_property_id === 3) {
+              charValForProduct["rozmir"] = charDefVal
+            }
           })
-          vyrobnyk.push(charValForProduct)
+          result.push(charValForProduct)
         })
       })
-      return vyrobnyk
+      console.log(result);
+      return result
     },
     getAllProducts: function () {
       const products = [];
