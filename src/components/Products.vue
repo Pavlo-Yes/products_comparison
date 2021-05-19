@@ -44,81 +44,10 @@
           {{ char.characteristics_property_i18_n.name | toUppercase }}
         </td>
         <template v-for="(form, i) in getPropertys">
-          <td :key="i"
-              v-if="form.forma && char.id===form.forma.characteristics_property_id">
-            {{ form.forma.characteristics_default_values_i18_n.name | toUppercase }}
+          <td :key="i" v-if="form[char.id]">
+            {{ form[char.id].value | toUppercase}}
           </td>
-          <td :key="i" v-if="!form.forma && char.id===7">-</td>
-        </template>
-        <template v-for="(napov, i) in getPropertys">
-          <td :key="i"
-              v-if="napov.napovnyuvach && char.id===napov.napovnyuvach.characteristics_property_id">
-            {{ napov.napovnyuvach.characteristics_default_values_i18_n.name | toUppercase }}
-          </td>
-          <td :key="i" v-if="!napov.napovnyuvach && char.id===8">-</td>
-        </template>
-        <template v-for="(rozm, i) in getPropertys">
-          <td :key="i"
-              v-if="rozm.rozmir && char.id===rozm.rozmir.characteristics_property_id">
-            {{ rozm.rozmir.value }}
-          </td>
-          <td :key="i" v-if="!rozm.rozmir && char.id===3">-</td>
-        </template>
-        <template v-for="(shyr, i) in getPropertys">
-          <td :key="i"
-              v-if="shyr.shyryna && char.id===shyr.shyryna.characteristics_property_id">
-            {{ shyr.shyryna.value }}
-          </td>
-          <td :key="i" v-if="!shyr.shyryna && char.id===11">-</td>
-        </template>
-        <template v-for="(zast, i) in getPropertys">
-          <td :key="i"
-              v-if="zast.zastibka && char.id===zast.zastibka.characteristics_property_id">
-            {{ zast.zastibka.characteristics_default_values_i18_n.name | toUppercase }}
-          </td>
-          <td :key="i" v-if="!zast.zastibka && char.id===9">-</td>
-        </template>
-        <template v-for="(gabaryt, i) in getPropertys">
-          <td :key="i"
-              v-if="gabaryt.gabaryty && char.id===gabaryt.gabaryty.characteristics_property_id">
-            {{ gabaryt.gabaryty.characteristics_default_values_i18_n.name | toUppercase }}
-          </td>
-          <td :key="i" v-if="!gabaryt.gabaryty && char.id===4">-</td>
-        </template>
-        <template v-for="(typ, i) in getPropertys">
-          <td :key="i"
-              v-if="typ.typ && char.id===typ.typ.characteristics_property_id">
-            {{ typ.typ.characteristics_default_values_i18_n.name | toUppercase }}
-          </td>
-          <td :key="i" v-if="!typ.typ && char.id===5">-</td>
-        </template>
-        <template v-for="(dovzhyna, i) in getPropertys">
-          <td :key="i"
-              v-if="dovzhyna.dovzhyna && char.id===dovzhyna.dovzhyna.characteristics_property_id">
-            {{ dovzhyna.dovzhyna.value | toUppercase }}
-          </td>
-          <td :key="i" v-if="!dovzhyna.dovzhyna && char.id===6">-</td>
-        </template>
-        <template v-for="(kol, i) in getPropertys">
-          <td :key="i"
-              v-if="kol.kolir && char.id===kol.kolir.characteristics_property_id">
-            {{ kol.kolir.characteristics_default_values_i18_n.name | toUppercase }}
-          </td>
-          <td :key="i" v-if="!kol.kolir && char.id===14">-</td>
-        </template>
-        <template v-for="(vyrobnyk, i) in getPropertys">
-          <td :key="i"
-              v-if="vyrobnyk.kraina && char.id===vyrobnyk.kraina.characteristics_property_id">
-            {{ vyrobnyk.kraina.characteristics_default_values_i18_n.name | toUppercase }}
-          </td>
-          <td :key="i" v-if="!vyrobnyk.kraina && char.id===10">-</td>
-        </template>
-        <template v-for="(vyrob, i) in getPropertys">
-          <td :key="i"
-              v-if="vyrob.vyrobnyk && char.id===vyrob.vyrobnyk.characteristics_property_id">
-            {{ vyrob.vyrobnyk.characteristics_default_values_i18_n.name | toUppercase }}
-          </td>
-          <td :key="i" v-if="!vyrob.vyrobnyk && char.id===13">-</td>
+          <td :key="i" v-if="!form[char.id]">-</td>
         </template>
       </tr>
       <!--      Default product characteristics (end) -->
@@ -201,6 +130,7 @@ export default {
           });
         }
       }
+      console.log(notEqualCharObj);
       return notEqualCharObj
     },
     getPropertys: function () {
@@ -210,53 +140,61 @@ export default {
           charValForProduct.characteristics_default_values.map(charDefVal => {
             if (charDefVal.characteristics_default_values_i18_n !== null &&
                 charDefVal.characteristics_property_id === 14) {
-              charValForProduct["kolir"] = charDefVal
+              charValForProduct[charDefVal.characteristics_property_id] =
+                  {value: charDefVal.characteristics_default_values_i18_n.name}
             }
             if (charDefVal.characteristics_default_values_i18_n !== null &&
                 charDefVal.characteristics_property_id === 13) {
-              charValForProduct["vyrobnyk"] = charDefVal
+              charValForProduct[charDefVal.characteristics_property_id] =
+                  {value: charDefVal.characteristics_default_values_i18_n.name}
             }
             if (charDefVal.value !== null &&
                 charDefVal.characteristics_property_id === 11) {
-              charValForProduct["shyryna"] = charDefVal
+              charValForProduct[charDefVal.characteristics_property_id] = {value: charDefVal.value}
             }
             if (charDefVal.characteristics_default_values_i18_n !== null &&
                 charDefVal.characteristics_property_id === 10) {
-              charValForProduct["kraina"] = charDefVal
+              charValForProduct[charDefVal.characteristics_property_id] =
+                  {value: charDefVal.characteristics_default_values_i18_n.name}
             }
             if (charDefVal.characteristics_default_values_i18_n !== null &&
                 charDefVal.characteristics_property_id === 9) {
-              charValForProduct["zastibka"] = charDefVal
+              charValForProduct[charDefVal.characteristics_property_id] =
+                  {value: charDefVal.characteristics_default_values_i18_n.name}
             }
             if (charDefVal.characteristics_default_values_i18_n !== null &&
                 charDefVal.characteristics_property_id === 8) {
-              charValForProduct["napovnyuvach"] = charDefVal
+              charValForProduct[charDefVal.characteristics_property_id] =
+                  {value: charDefVal.characteristics_default_values_i18_n.name}
             }
             if (charDefVal.characteristics_default_values_i18_n !== null &&
                 charDefVal.characteristics_property_id === 7) {
-              charValForProduct["forma"] = charDefVal
+              charValForProduct[charDefVal.characteristics_property_id] =
+                  {value: charDefVal.characteristics_default_values_i18_n.name}
             }
             if (charDefVal.characteristics_default_values_i18_n !== null &&
                 charDefVal.characteristics_property_id === 6) {
-              charValForProduct["dovzhyna"] = charDefVal
+              charValForProduct[charDefVal.characteristics_property_id] =
+                  {value: charDefVal.characteristics_default_values_i18_n.name}
             }
             if (charDefVal.characteristics_default_values_i18_n !== null &&
                 charDefVal.characteristics_property_id === 5) {
-              charValForProduct["typ"] = charDefVal
+              charValForProduct[charDefVal.characteristics_property_id] =
+                  {value: charDefVal.characteristics_default_values_i18_n.name}
             }
             if (charDefVal.characteristics_default_values_i18_n !== null &&
                 charDefVal.characteristics_property_id === 4) {
-              charValForProduct["gabaryty"] = charDefVal
+              charValForProduct[charDefVal.characteristics_property_id] =
+                  {value: charDefVal.characteristics_default_values_i18_n.name}
             }
             if (charDefVal.value !== null &&
                 charDefVal.characteristics_property_id === 3) {
-              charValForProduct["rozmir"] = charDefVal
+              charValForProduct[charDefVal.characteristics_property_id] = {value: charDefVal.value}
             }
           })
           result.push(charValForProduct)
         })
       })
-      console.log(result);
       return result
     },
     getAllProducts: function () {
@@ -303,7 +241,6 @@ table {
 }
 
 td {
-  /*height: 100px;*/
   border: 1px solid gray;
   padding: 10px
 }
