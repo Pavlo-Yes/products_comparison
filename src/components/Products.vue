@@ -45,7 +45,7 @@
         </td>
         <template v-for="(form, i) in getPropertys">
           <td :key="i" v-if="form[char.id]">
-            {{ form[char.id].value | toUppercase}}
+            {{ form[char.id].value | toUppercase }}
           </td>
           <td :key="i" v-if="!form[char.id]">-</td>
         </template>
@@ -130,7 +130,6 @@ export default {
           });
         }
       }
-      console.log(notEqualCharObj);
       return notEqualCharObj
     },
     getPropertys: function () {
